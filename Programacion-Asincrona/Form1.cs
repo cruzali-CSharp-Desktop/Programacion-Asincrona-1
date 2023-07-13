@@ -24,7 +24,9 @@ namespace Programacion_Asincrona
 
             // Proceso lento
 
-            await Task.Delay(5000); // Delay retorna un task en el futuro.
+            // ProcesamientoLargo(); // No espera la respuesta del Procesaminto, se pasa a la siguiente linea.
+
+            await ProcesamientoLargo();
             
             //Thread.Sleep(5000); // Síncrono
 
@@ -34,7 +36,8 @@ namespace Programacion_Asincrona
 
         private async Task ProcesamientoLargo()
         {
-
+            await Task.Delay(3000); // Delay retorna un task en el futuro.
+            MessageBox.Show("Ya paso");
         }
     }
 }
