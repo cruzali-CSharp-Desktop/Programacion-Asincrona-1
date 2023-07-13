@@ -20,13 +20,20 @@ namespace Programacion_Asincrona
 
         private async void BtnEmpezar_Click(object sender, EventArgs e)
         {
+            // async void es un antipatron
+            // SOLO se usa cuando estamos ante un evento como el evento Click (Fuera de estos casos no usarlo así)
+
             pictureBox1.Visible = true;
 
             // Proceso lento
 
             // ProcesamientoLargo(); // No espera la respuesta del Procesaminto, se pasa a la siguiente linea.
 
-            await ProcesamientoLargo();
+            //await ProcesamientoLargo();
+
+            var nombre = await ProcesamientoLargo();
+
+            MessageBox.Show("Saludos " + nombre);
             
             //Thread.Sleep(5000); // Síncrono
 
@@ -34,10 +41,11 @@ namespace Programacion_Asincrona
         }
 
 
-        private async Task ProcesamientoLargo()
+        private async Task<string> ProcesamientoLargo()
         {
             await Task.Delay(3000); // Delay retorna un task en el futuro.
             MessageBox.Show("Ya paso");
+            return "Ali C";
         }
     }
 }
