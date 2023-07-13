@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -31,10 +32,32 @@ namespace Programacion_Asincrona
 
             //await ProcesamientoLargo();
 
-            var nombre = await ProcesamientoLargo();
+            //var nombre = await ProcesamientoLargo();
 
-            MessageBox.Show("Saludos " + nombre);
-            
+            //MessageBox.Show("Saludos " + nombre);
+
+            var sw = new Stopwatch();
+            sw.Start();
+
+            // Se ejecuta una detrás de la otra.
+            //await RealizaProcesamientoLargoA();
+            //await RealizaProcesamientoLargoB();
+            //await RealizaProcesamientoLargoC();
+
+            var tareas = new List<Task>()
+            {
+                RealizaProcesamientoLargoA(),
+                RealizaProcesamientoLargoB(),
+                RealizaProcesamientoLargoC()
+            };
+
+            await Task.WhenAll(tareas);
+
+
+            sw.Stop();
+            var duracion = $"El programa se ejecutó en {sw.ElapsedMilliseconds / 1000.0} segundos";
+            Console.WriteLine(duracion);
+
             //Thread.Sleep(5000); // Síncrono
 
             pictureBox1.Visible = false;
@@ -47,5 +70,26 @@ namespace Programacion_Asincrona
             MessageBox.Show("Ya paso");
             return "Ali C";
         }
+
+        private async Task RealizaProcesamientoLargoA()
+        {
+            await Task.Delay(1000);
+            Console.WriteLine("Proceso A finalizado");
+        }
+
+        private async Task RealizaProcesamientoLargoB()
+        {
+            await Task.Delay(1000);
+            Console.WriteLine("Proceso B finalizado");
+        }
+
+        private async Task RealizaProcesamientoLargoC()
+        {
+            await Task.Delay(1000);
+            Console.WriteLine("Proceso C finalizado");
+        }
+
+
+
     }
 }
