@@ -24,11 +24,17 @@ namespace Programacion_Asincrona
 
             // Proceso lento
 
-            Task.Delay(5000);
+            await Task.Delay(5000); // Delay retorna un task en el futuro.
             
             //Thread.Sleep(5000); // Síncrono
 
             pictureBox1.Visible = false;
+        }
+
+
+        private async Task ProcesamientoLargo()
+        {
+
         }
     }
 }
